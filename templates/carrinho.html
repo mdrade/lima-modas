@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho - Li&amp;Ma Modas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/loja.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <div id="mainSite" class="site-container">
+
+    <!-- CABEÇALHO (igual ao da loja) -->
+    <header class="header">
+      <div class="top-bar">
+        <span>🚚 Fazemos entregas &nbsp;•&nbsp; 💳 Cartão de crédito ou Pix &nbsp;•&nbsp; Tatuapé - SP</span>
+      </div>
+      <div class="nav-container">
+        <div class="logo">
+          <img src="/static/logo-limama.png" alt="Li&amp;Ma Modas" class="logo-img">
+        </div>
+        <nav class="nav-links">
+          <a href="{{ url_for('loja') }}">Início</a>
+          <a href="{{ url_for('loja', categoria='lancamentos') }}">Lançamentos</a>
+          <a href="{{ url_for('loja', categoria='vestidos') }}">Vestidos</a>
+          <a href="{{ url_for('loja', categoria='conjuntos') }}">Conjuntos</a>
+          <a href="{{ url_for('loja', categoria='promocoes') }}">Promoções</a>
+        </nav>
+        <div class="user-actions">
+          <a href="{{ url_for('carrinho') }}" class="cart-icon">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span id="cartCount" class="badge">0</span>
+          </a>
+          <a href="/logout" class="btn-outline"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DO CARRINHO -->
+    <main class="cart-page">
+      <div class="section-title">
+        <h2>Seu Carrinho</h2>
+        <p>Confira os itens antes de finalizar a compra</p>
+      </div>
+
+      <div id="cartEmpty" class="cart-empty">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <p>Seu carrinho está vazio.</p>
+        <a href="{{ url_for('loja') }}" class="btn-hero-dark">Ver produtos</a>
+      </div>
+
+      <div id="cartItems" class="cart-items"></div>
+
+      <div id="cartSummary" class="cart-summary">
+        <div class="cart-total-row">
+          <span>Total</span>
+          <span id="cartTotal">R$ 0,00</span>
+        </div>
+        <button id="btnFinalizar" class="btn-add-cart">Finalizar Compra</button>
+      </div>
+    </main>
+
+    <!-- RODAPÉ (igual ao da loja) -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="/static/logo-limama.png" alt="Li&amp;Ma Modas" class="footer-logo">
+          <p>Loja on-line de roupas femininas e acessórios. Fazemos entregas e aceitamos cartão de crédito ou Pix.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Atendimento</h4>
+          <p><i class="fa-solid fa-location-dot"></i> Tatuapé - SP</p>
+          <p><i class="fa-brands fa-instagram"></i> <a href="https://www.instagram.com/limamoda_/" target="_blank" rel="noopener">@limamoda_</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Li&amp;Ma Modas. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="/static/carrinho.js"></script>
+</body>
+</html>

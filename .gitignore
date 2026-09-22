@@ -1,0 +1,14 @@
+# Segredos — nunca suba isso pro GitHub
+.env
+
+# Banco de dados local (cada ambiente deve ter o seu)
+usuarios.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor
+.vscode/

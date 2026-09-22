@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="/static/estilo.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <h2>Crie sua conta</h2>
+      <p>Preencha os dados abaixo para se cadastrar.</p>
+    </div>
+
+    <form id="cadastroForm" class="login-form">
+      <div class="input-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="seu@email.com" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="••••••••" required minlength="6">
+      </div>
+
+      <div class="input-group">
+        <label for="confirmarSenha">Confirmar senha</label>
+        <input type="password" id="confirmarSenha" placeholder="••••••••" required minlength="6">
+      </div>
+
+      <button type="submit" class="btn-login">Cadastrar</button>
+    </form>
+
+    <div class="login-footer">
+      <p>Já tem uma conta? <a href="/">Entrar</a></p>
+    </div>
+  </div>
+
+  <script src="/static/cadastro.js"></script>
+</body>
+</html>

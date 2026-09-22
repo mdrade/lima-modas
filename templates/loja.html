@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Li&amp;Ma Modas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/loja.css">
+  <!-- Ícones via FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- SITE PRINCIPAL (só chega aqui quem já fez login de verdade) -->
+  <div id="mainSite" class="site-container">
+
+    <!-- CABEÇALHO DA LOJA -->
+    <header class="header">
+      <div class="top-bar">
+        <span>🚚 Fazemos entregas &nbsp;•&nbsp; 💳 Cartão de crédito ou Pix &nbsp;•&nbsp; Tatuapé - SP</span>
+      </div>
+      <div class="nav-container">
+        <div class="logo">
+          <img src="/static/logo-limama.png" alt="Li&amp;Ma Modas" class="logo-img">
+        </div>
+        <nav class="nav-links">
+          <a href="{{ url_for('loja') }}" class="{{ 'active' if not categoria_ativa else '' }}">Início</a>
+          <a href="{{ url_for('loja', categoria='lancamentos') }}" class="{{ 'active' if categoria_ativa == 'lancamentos' else '' }}">Lançamentos</a>
+          <a href="{{ url_for('loja', categoria='vestidos') }}" class="{{ 'active' if categoria_ativa == 'vestidos' else '' }}">Vestidos</a>
+          <a href="{{ url_for('loja', categoria='conjuntos') }}" class="{{ 'active' if categoria_ativa == 'conjuntos' else '' }}">Conjuntos</a>
+          <a href="{{ url_for('loja', categoria='promocoes') }}" class="{{ 'active' if categoria_ativa == 'promocoes' else '' }}">Promoções</a>
+        </nav>
+        <div class="user-actions">
+          <a href="{{ url_for('carrinho') }}" class="cart-icon">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span id="cartCount" class="badge">0</span>
+          </a>
+          <a href="/logout" class="btn-outline"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- CARROSSEL DE PRODUTOS -->
+    <section id="home" class="hero-carousel">
+      <div class="carousel-track">
+        {% for p in todos_produtos %}
+        <div class="carousel-slide{{ ' active' if loop.first else '' }}" style="background-image: url('/static/{{ p.imagem }}')">
+          <div class="slide-overlay">
+            <span>Loja Online de Moda Feminina</span>
+            <h2>{{ p.nome }}</h2>
+            <p class="slide-price">R$ {{ "%.2f"|format(p.preco)|replace(".", ",") }}</p>
+            <a href="#catalogo" class="btn-hero">Ver Coleção</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <button class="carousel-arrow prev" onclick="prevSlide()" aria-label="Produto anterior">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="carousel-arrow next" onclick="nextSlide()" aria-label="Próximo produto">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div class="carousel-dots">
+        {% for p in todos_produtos %}
+        <span class="dot{{ ' active' if loop.first else '' }}" onclick="goToSlide({{ loop.index0 }})"></span>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- CATÁLOGO DE PRODUTOS -->
+    <main id="catalogo" class="products-section">
+      <div class="section-title">
+        <h2>{{ titulo_secao }}</h2>
+        {% if categoria_ativa %}
+          <p>Peças da categoria {{ titulo_secao }} selecionadas para você — <a href="{{ url_for('loja') }}" class="ver-todos-link">ver todos os produtos</a></p>
+        {% else %}
+          <p>Peças exclusivas selecionadas para você</p>
+        {% endif %}
+      </div>
+
+      <div class="products-grid">
+        {% for p in produtos %}
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/static/{{ p.imagem }}" alt="{{ p.nome }}">
+            {% if p.tag == 'Oferta' %}
+            <span class="tag tag-sale">Oferta</span>
+            {% elif p.tag %}
+            <span class="tag">{{ p.tag }}</span>
+            {% endif %}
+          </div>
+          <div class="product-info">
+            <h3>{{ p.nome }}</h3>
+            <p class="price">{% if p.preco_antigo %}<span class="old-price">R$ {{ "%.2f"|format(p.preco_antigo)|replace(".", ",") }}</span> {% endif %}R$ {{ "%.2f"|format(p.preco)|replace(".", ",") }}</p>
+            <button class="btn-add-cart" onclick="addToCart('{{ p.nome }}', {{ p.preco }}, '{{ p.imagem }}')">Adicionar ao Carrinho</button>
+          </div>
+        </div>
+        {% endfor %}
+
+        {% if not produtos %}
+        <p>Nenhum produto encontrado nessa categoria ainda.</p>
+        {% endif %}
+      </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="/static/logo-limama.png" alt="Li&amp;Ma Modas" class="footer-logo">
+          <p>Loja on-line de roupas femininas e acessórios. Fazemos entregas e aceitamos cartão de crédito ou Pix.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Atendimento</h4>
+          <p><i class="fa-solid fa-location-dot"></i> Tatuapé - SP</p>
+          <p><i class="fa-brands fa-instagram"></i> <a href="https://www.instagram.com/limamoda_/" target="_blank" rel="noopener">@limamoda_</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Li&amp;Ma Modas. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="/static/loja.js"></script>
+</body>
+</html>
